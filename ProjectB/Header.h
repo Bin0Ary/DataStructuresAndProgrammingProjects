@@ -39,9 +39,9 @@ void FillDeque(std::deque <int>& numInt1, std::deque <int>& numInt2, const std::
 }
 /* Multiplication algorithm for the two deques*/
 void Mult(const std::deque <int>& numInt1, const std::deque <int>& numInt2, std::deque <std::deque<int>>& resultInt) {
-	int carry{ 0 };
-	int mult{ 0 };
-	int carryCheck{ 0 };
+	long long carry{ 0 };
+	long long mult{ 0 };
+	long long carryCheck{ 0 };
 	// l variable is used to keep track of the number of zeroes to add 
 	size_t l = numInt1.size() - 1;
 	// i variable is used to keep track of the row in numInt1 deque
@@ -68,10 +68,10 @@ void Mult(const std::deque <int>& numInt1, const std::deque <int>& numInt2, std:
 				temp.push_front(0);
 			}
 		}
-		else if (carryCheck == 1) {
-			for (size_t k = (l - 1); k-- > 0;) {
-				temp.push_front(0);
-			}
+		else if (carryCheck == 1 && l > 0) {
+            for (size_t k = l - 1; k > 0; --k) {
+            temp.push_front(0);
+            }
 		}
 		for (size_t k = 0; k < numInt1.size() - 1 - i; ++k) {
 			temp.push_back(0);

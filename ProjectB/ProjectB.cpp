@@ -12,9 +12,5 @@ int main() {
 	CleanString(numString);
 	FillDeque(numInt1, numInt2, numString);
 	Mult(numInt1, numInt2, multInt);
-	for (const auto& row : multInt)
-	{
-		for (const auto& s : row) std::cout << s << ' ';
-		std::cout << std::endl;
-	}
+	
 }
