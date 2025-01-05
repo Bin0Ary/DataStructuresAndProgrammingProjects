@@ -1,15 +1,20 @@
 #include <iostream>
-#include <string>
-#include <vector>
 #include <deque>
-#include "Header.h"
+#include <string>
+#include "header.h"
 int main() {
-	std::string numString{};
-	std::deque <std::deque <int>> numInt;
-	std::deque <std::deque <int>> resultInt;
+	std::string numString;
+	std::deque <int> numInt1;
+	std::deque <int> numInt2;
+	std::deque <std::deque<int>> multInt;
+	std::deque <int> resultInt;
 	NumberPrompt(numString);
 	CleanString(numString);
-	FillVector(numInt, numString);
-	Multiplication(numInt, resultInt);
+	FillDeque(numInt1, numInt2, numString);
+	Mult(numInt1, numInt2, multInt);
+	for (const auto& row : multInt)
+	{
+		for (const auto& s : row) std::cout << s << ' ';
+		std::cout << std::endl;
+	}
 }
-
