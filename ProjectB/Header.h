@@ -38,10 +38,10 @@ void FillDeque(std::deque <int>& numInt1, std::deque <int>& numInt2, const std::
 	}
 }
 /* Multiplication algorithm for the two deques*/
-void Mult(const std::deque <int>& numInt1, const std::deque <int>& numInt2, std::deque <std::deque<int>>& resultInt) {
-	long long carry{ 0 };
-	long long mult{ 0 };
-	long long carryCheck{ 0 };
+void Mult(const std::deque <int>& numInt1, const std::deque <int>& numInt2, std::deque <std::deque<int>>& multInt) {
+	size_t carry{ 0 };
+	size_t mult{ 0 };
+	size_t carryCheck{ 0 };
 	// l variable is used to keep track of the number of zeroes to add 
 	size_t l = numInt1.size() - 1;
 	// i variable is used to keep track of the row in numInt1 deque
@@ -78,10 +78,36 @@ void Mult(const std::deque <int>& numInt1, const std::deque <int>& numInt2, std:
 		}
 		carryCheck = 0;
 		l--;
-		resultInt.push_back(temp);
+		multInt.push_back(temp);
 	}
 }
 
-void Add(std::deque <int>& resultInt, const std::deque <std::deque<int>>& multInt) {
+void Add(std::deque <int>& resultInt, const std::deque <std::deque<int>>& multInt, size_t& l) {
+	unsigned int sum{ 0 };
+	unsigned int carry{ 0 };
+	for (size_t i = multInt[0].size(); i-- > 0;) {
+		sum = 0;
+		for (size_t j = multInt.size(); j-- > 0;) {
+			sum += multInt[j][i];
+		}
+		if (carry > 0) {
+			sum += carry;
+			carry = 0;
+		}
+		if (sum > 9) {
+			carry = sum / 10;
+		}
+		if(i > 0){
+		resultInt.push_front(sum % 10);
+		}
+		else {
+			resultInt.push_front(sum);
+		}
+	}
+}
 
+void DisplayDeque(const std::deque <int>& resultInt) {
+	for (auto val : resultInt) {
+		std::cout << val;
+	}
 }

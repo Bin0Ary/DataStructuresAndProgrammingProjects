@@ -12,5 +12,7 @@ int main() {
 	CleanString(numString);
 	FillDeque(numInt1, numInt2, numString);
 	Mult(numInt1, numInt2, multInt);
-	
+	size_t l = numInt1.size() - 1;
+	Add(resultInt, multInt, l);
+	DisplayDeque(resultInt);
 }
