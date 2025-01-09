@@ -39,70 +39,39 @@ void FillDeque(std::deque <int>& numInt1, std::deque <int>& numInt2, const std::
 }
 /* Multiplication algorithm for the two deques*/
 void Mult(const std::deque <int>& numInt1, const std::deque <int>& numInt2, std::deque <std::deque<int>>& multInt) {
-	size_t carry{ 0 };
-	size_t mult{ 0 };
-	size_t carryCheck{ 0 };
-	// l variable is used to keep track of the number of zeroes to add 
-	size_t l = numInt1.size() - 1;
-	// i variable is used to keep track of the row in numInt1 deque
-	for (size_t i = numInt1.size(); i-- > 0;) {
-		std::deque <int> temp;
-		carry = 0;
-		// j variable is used to keep track of the row
-		for (size_t j = numInt2.size(); j-- > 0;) {
-			mult = ((numInt1[i] * numInt2[j]) + carry);
-			temp.push_front(mult % 10);
-			if (j == 0) {
-				if (mult > 9) {
-					temp.push_front(mult / 10);
-					carryCheck = 1;
-				}
-			}
-			carry = 0;
-			if (mult > 9) {
-				carry = mult / 10;
-			}
+	for (size_t i = 0; i < numInt1.size(); ++i) {
+		std::deque<int> temp(numInt1.size() + numInt2.size(), 0);
+		size_t carry = 0;
+
+		for (size_t j = 0; j < numInt2.size(); ++j) {
+			size_t mult = (numInt1[numInt1.size() - 1 - i] * numInt2[numInt2.size() - 1 - j]) + carry;
+			temp[temp.size() - 1 - j - i] = mult % 10;
+			carry = mult / 10;
 		}
-		if (l > 0 && carryCheck != 1) {
-			for (size_t k = l; k-- > 0;) {
-				temp.push_front(0);
-			}
+		if (carry > 0) {
+			temp[temp.size() - 1 - numInt2.size() - i] = carry;
 		}
-		else if (carryCheck == 1 && l > 0) {
-            for (size_t k = l - 1; k > 0; --k) {
-            temp.push_front(0);
-            }
-		}
-		for (size_t k = 0; k < numInt1.size() - 1 - i; ++k) {
-			temp.push_back(0);
-		}
-		carryCheck = 0;
-		l--;
 		multInt.push_back(temp);
 	}
 }
+// Adds the columns in the deque and pushfronts into resultInt
+void Add(std::deque <int>& resultInt, const std::deque <std::deque<int>>& multInt) {
+	size_t maxSize = multInt[0].size();
+	resultInt.resize(maxSize, 0);
+	unsigned int carry = 0;
 
-void Add(std::deque <int>& resultInt, const std::deque <std::deque<int>>& multInt, size_t& l) {
-	unsigned int sum{ 0 };
-	unsigned int carry{ 0 };
-	for (size_t i = multInt[0].size(); i-- > 0;) {
-		sum = 0;
-		for (size_t j = multInt.size(); j-- > 0;) {
-			sum += multInt[j][i];
+	for (size_t i = 0; i < maxSize; ++i) {
+		unsigned int sum = carry;
+		for (const auto& row : multInt) {
+			if (i < row.size()) {
+				sum += row[row.size() - 1 - i];
+			}
 		}
-		if (carry > 0) {
-			sum += carry;
-			carry = 0;
-		}
-		if (sum > 9) {
-			carry = sum / 10;
-		}
-		if(i > 0){
-		resultInt.push_front(sum % 10);
-		}
-		else {
-			resultInt.push_front(sum);
-		}
+		carry = sum / 10;
+		resultInt[maxSize - 1 - i] = sum % 10;
+	}
+	if (carry > 0) {
+		resultInt.push_front(carry);
 	}
 }
 
