@@ -1,6 +1,5 @@
 #pragma once
 #include <iostream>
-#include <vector>
 #include <string>
 #include <deque>
 // Prompts the user for number inputs
