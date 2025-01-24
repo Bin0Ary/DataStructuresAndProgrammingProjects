@@ -41,68 +41,63 @@ void FillDeque(std::deque <int>& numInt1, std::deque <int>& numInt2, const std::
 void Mult(const std::deque <int>& numInt1, const std::deque <int>& numInt2, std::deque <std::deque<int>>& multInt) {
 	size_t carry{ 0 };
 	size_t mult{ 0 };
-	size_t carryCheck{ 0 };
-	// l variable is used to keep track of the number of zeroes to add 
-	size_t l = numInt1.size() - 1;
-	// i variable is used to keep track of the row in numInt1 deque
+	size_t l = 0; 
 	for (size_t i = numInt1.size(); i-- > 0;) {
-		std::deque <int> temp;
+		std::deque<int> temp;
 		carry = 0;
-		// j variable is used to keep track of the row
 		for (size_t j = numInt2.size(); j-- > 0;) {
-			mult = ((numInt1[i] * numInt2[j]) + carry);
+			mult = (numInt1[i] * numInt2[j]) + carry;
 			temp.push_front(mult % 10);
-			if (j == 0) {
-				if (mult > 9) {
-					temp.push_front(mult / 10);
-					carryCheck = 1;
-				}
-			}
-			carry = 0;
-			if (mult > 9) {
-				carry = mult / 10;
-			}
+			carry = mult / 10;
 		}
-		if (l > 0 && carryCheck != 1) {
-			for (size_t k = l; k-- > 0;) {
-				temp.push_front(0);
-			}
+
+		
+		if (carry > 0) {
+			temp.push_front(carry);
 		}
-		else if (carryCheck == 1 && l > 0) {
-            for (size_t k = l - 1; k > 0; --k) {
-            temp.push_front(0);
-            }
+
+		
+		for (size_t k = 0; k < l; ++k) {
+			temp.push_back(0); 
 		}
-		for (size_t k = 0; k < numInt1.size() - 1 - i; ++k) {
-			temp.push_back(0);
-		}
-		carryCheck = 0;
-		l--;
+
+		
 		multInt.push_back(temp);
+		l++; 
 	}
 }
+
 
 void Add(std::deque <int>& resultInt, const std::deque <std::deque<int>>& multInt, size_t& l) {
 	unsigned int sum{ 0 };
 	unsigned int carry{ 0 };
-	for (size_t i = multInt[0].size(); i-- > 0;) {
-		sum = 0;
-		for (size_t j = multInt.size(); j-- > 0;) {
-			sum += multInt[j][i];
+
+	
+	size_t maxSize = 0;
+	for (const auto& row : multInt) {
+		if (row.size() > maxSize) {
+			maxSize = row.size();
 		}
-		if (carry > 0) {
-			sum += carry;
-			carry = 0;
+	}
+
+	
+	for (size_t i = 0; i < maxSize; ++i) {
+		sum = carry;  
+		for (const auto& row : multInt) {
+			if (row.size() > i) {
+				sum += row[row.size() - 1 - i]; 
+			}
 		}
-		if (sum > 9) {
-			carry = sum / 10;
-		}
-		if(i > 0){
+
+		
+		carry = sum / 10;
+
 		resultInt.push_front(sum % 10);
-		}
-		else {
-			resultInt.push_front(sum);
-		}
+	}
+
+	while (carry > 0) {
+		resultInt.push_front(carry % 10);
+		carry /= 10;
 	}
 }
 
