@@ -23,7 +23,7 @@ void CleanString(std::string& s) {
 		}
 	}
 }
-/*Fills two deques with numbers inside the strings*/
+/*Fills two deques with numbers inside the strings by spilitting both*/
 void FillDeque(std::deque <int>& numInt1, std::deque <int>& numInt2, const std::string& numString) {
 	size_t pos{ 0 };
 	for (size_t i{ 0 }; i < numString.size(); ++i) {
@@ -49,37 +49,27 @@ void Mult(const std::deque <int>& numInt1, const std::deque <int>& numInt2, std:
 			temp.push_front(mult % 10);
 			carry = mult / 10;
 		}
-
-		
 		if (carry > 0) {
 			temp.push_front(carry);
 		}
-
-		
 		for (size_t k = 0; k < l; ++k) {
 			temp.push_back(0); 
 		}
-
-		
 		multInt.push_back(temp);
 		l++; 
 	}
 }
 
-
+//Add function, just adds the columns of the multInt deque
 void Add(std::deque <int>& resultInt, const std::deque <std::deque<int>>& multInt, size_t& l) {
 	unsigned int sum{ 0 };
 	unsigned int carry{ 0 };
-
-	
 	size_t maxSize = 0;
 	for (const auto& row : multInt) {
 		if (row.size() > maxSize) {
 			maxSize = row.size();
 		}
 	}
-
-	
 	for (size_t i = 0; i < maxSize; ++i) {
 		sum = carry;  
 		for (const auto& row : multInt) {
@@ -87,8 +77,6 @@ void Add(std::deque <int>& resultInt, const std::deque <std::deque<int>>& multIn
 				sum += row[row.size() - 1 - i]; 
 			}
 		}
-
-		
 		carry = sum / 10;
 
 		resultInt.push_front(sum % 10);
