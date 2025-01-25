@@ -4,6 +4,6 @@
 
 int main() {
     std::deque<int> numbers = getNumbers();
-    calculateAndPrintFrequency(numbers);
+    Frequency(numbers);
     return 0;
 }
