@@ -3,7 +3,7 @@
 // Function to get the numbers from the user and store them in a deque
 std::deque<int> getNumbers() {
     std::deque<int> numbers;
-    std::cout << "Enter the numbers (End with '.'): ";
+    std::cout << "Input numbers (End with '.'): ";
     int num;
     while (std::cin >> num) {
         numbers.push_back(num);
