@@ -16,7 +16,7 @@ std::deque<int> getNumbers() {
 }
 
 // Function to calculate the frequency of each number
-void calculateAndPrintFrequency(const std::deque<int>& numbers) {
+void Frequency(const std::deque<int>& numbers) {
     std::deque<int> counted;
     std::cout << "Frequency of numbers:\n";
     for (int num : numbers) {
